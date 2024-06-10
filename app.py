@@ -3,6 +3,7 @@ from database.connection import get_db_connection
 from models.article import Article
 from models.author import Author
 from models.magazine import Magazine
+# import ipdb
 
 def main():
     # Initialize the database and create tables
@@ -44,12 +45,17 @@ def main():
 
     cursor.execute('SELECT * FROM magazines')
     magazines = cursor.fetchall()
+    magazines = [dict(magazine) for magazine in magazines]
 
     cursor.execute('SELECT * FROM authors')
     authors = cursor.fetchall()
+    authors = [dict(author) for author in authors]
 
     cursor.execute('SELECT * FROM articles')
     articles = cursor.fetchall()
+    articles = [dict(article) for article in articles]
+
+    # ipdb.set_trace()
 
     conn.close()
 
@@ -65,6 +71,7 @@ def main():
     print("\nArticles:")
     for article in articles:
         print(Article(article["id"], article["title"], article["content"], article["author_id"], article["magazine_id"]))
+
 
 if __name__ == "__main__":
     main()
