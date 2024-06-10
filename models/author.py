@@ -1,3 +1,9 @@
+from database.connection import get_db_connection 
+from .article import Article
+
+conn = get_db_connection()
+cursor = conn.cursor()
+
 class Author:
     def __init__(self, id, name):
         self.id = id
@@ -30,3 +36,18 @@ class Author:
             if not isinstance(name_value, str) and len(name_value) == 0:
                 raise ValueError ("Name must be a non-empty sting.")
             self._name = name_value
+
+    def articles(self):
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        sql = """
+            SELECT *
+            FROM articles
+            WHERE author_id = ?
+        """
+        cursor.execute(sql, (self.id,))
+        rows = cursor.fetchall()
+        articles = []
+        for row in rows:
+            articles.append(Article.instance_from_db(row))
+        return articles

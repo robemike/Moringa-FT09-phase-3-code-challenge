@@ -44,9 +44,9 @@ class Article:
 
     @property
     def author(self):
-        from author import Author 
+        from .author import Author 
         sql = """
-        SELECT authors.name
+        SELECT authors.id, authors.name
         FROM authors 
         INNER JOIN articles
         ON articles.author_id = authors.id
@@ -54,21 +54,29 @@ class Article:
         """
         cursor.execute(sql, (self.author_id,))
         row = cursor.fetchone()
-        return Author(row[1]) if row else None
+        if row:
+            author_id, author_name = row
+            return Author(author_id, author_name)
+        else:
+            return None
     
     @property
     def magazine(self):
         from models.magazine import Magazine
         sql = """
-            SELECT magazines.name
+            SELECT magazines.id, magazines.name, magazines.category
             FROM magazines
             INNER JOIN articles 
             ON magazines.id = articles.magazine_id
-            WHERE article.id = ? 
+            WHERE articles.id = ? 
         """
         cursor.execute(sql, (self.magazine_id,))
         row = cursor.fetchone()
-        return Magazine(row[1]) if row else None
+        if row:
+            magazine_id, magazine_name, magazine_category = row
+            return Magazine(magazine_id, magazine_name, magazine_category)
+        else:
+            return None
         
     def save(self):
         if self.id is None:
@@ -87,6 +95,18 @@ class Article:
             """
             cursor.execute(sql, (self.title, self.content, self.author_id, self.magazine_id, self.id))
             conn.commit()
+
+    @classmethod
+    def get_by_id(cls, article_id):
+        """Get Article by id"""
+        sql = """
+            SELECT *
+            FROM articles
+            WHERE id = ?
+        """
+        cursor.execute(sql, (article_id,))
+        row = cursor.fetchone()
+        return cls.instance_from_db(row) if row else None
 
     @classmethod
     def instance_from_db(cls, row):
