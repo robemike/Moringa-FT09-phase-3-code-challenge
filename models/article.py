@@ -15,32 +15,43 @@ class Article:
         self.magazine_id = magazine_id
 
     def __repr__(self):
-        return f'<Article {self.title}: Content: {self.content}, Author: {self.author_id}, Magazine: {self.magazine_id}>'
+        return f'<Article {self.title}: Content: {self.content}, author_id: {self.author_id}, magazine_id: {self.magazine_id}>'
     
     @property
     def id(self):
         return self._id
     
     @id.setter
-    def id(self, id_value):
-        if not isinstance(id_value, int):
+    def id(self, id):
+        if not isinstance(id, int):
             raise ValueError(
                 "ID must be of type integer."
             )
-        self._id = id_value
+        self._id = id
 
     @property
     def title(self):
         return self._title
 
     @title.setter
-    def title(self, title_value):
+    def title(self, title):
         if hasattr(self, "title"):
             AttributeError("Title not changeable.")
         else:
-            if not isinstance(title_value, str) and 5 <= len(title_value) <= 50:
+            if not isinstance(title, str) and 5 <= len(title) <= 50:
                 raise ValueError ("Title must be a non-empty sting.")
-            self._title = title_value
+            self._title = title
+
+    @property
+    def content(self):
+        return self._content
+    
+    @content.setter 
+    def content(self, content):
+        if not isinstance(content, str) and len(content) == 0:
+            ValueError ("Article content must be a non-empty string.")
+        self._content = content
+
 
     @property
     def author(self):
@@ -77,24 +88,6 @@ class Article:
             return Magazine(magazine_id, magazine_name, magazine_category)
         else:
             return None
-        
-    # def save(self):
-    #     if self.id is None:
-    #         sql = """
-    #             INSERT INTO articles (title, content, author_id, magazine_id)
-    #             VALUES (?,?,?,?)
-    #         """
-    #         cursor.execute(sql, (self.title, self.content, self.author_id, self.magazine_id))
-    #         conn.commit()
-    #         self.id = cursor.lastrowid
-    #     else:
-    #         sql = """
-    #             UPDATE articles
-    #             SET title =?, content =?, author_id =?, magazine_id =?
-    #             WHERE id =?
-    #         """
-    #         cursor.execute(sql, (self.title, self.content, self.author_id, self.magazine_id, self.id))
-    #         conn.commit()
 
     @classmethod
     def get_by_id(cls, article_id):

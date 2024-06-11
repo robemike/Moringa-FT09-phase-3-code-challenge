@@ -36,7 +36,8 @@ def main():
                get_contributors_by_magazine_id()
           elif choice == "8":
                add_items_to_database()
-               pass
+          else:
+               print("<Select a valid option.>")
         
         
 

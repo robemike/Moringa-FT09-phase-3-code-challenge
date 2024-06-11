@@ -18,7 +18,7 @@ def get_author_by_article_id():
     if article:
         author = article.author
         if author:
-            print(f"The author of the article (ID: {article_id}) is: {author}")
+            print(f"The author of the article [{article.title} (ID: {article_id})] is: {author}")
         else:
             print(f"No author found for the article with ID {article_id}.")
     else:
