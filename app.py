@@ -5,7 +5,10 @@ from cli_functions import (
      list_articles,
      get_author_by_article_id,
      get_magazine_by_article_id, 
-     get_articles_by_author_id
+     get_articles_by_author_id,
+     get_magazines_by_author_id,
+     get_articles_by_magazine_id,
+     get_contributors_by_magazine_id
 )
 
 def main():
@@ -24,6 +27,12 @@ def main():
                get_magazine_by_article_id()
           elif choice == "4":
                get_articles_by_author_id()
+          elif choice == "5":
+               get_magazines_by_author_id()
+          elif choice == "6":
+               get_articles_by_magazine_id()
+          elif choice == "7":
+               get_contributors_by_magazine_id()
         
         
 
@@ -34,6 +43,9 @@ def menu():
         print("2. Author of an Article.")
         print("3. Magazine of a certain Article.")
         print("4. Articles of an Author.")
+        print("5. Magazines associated with an author.")
+        print("6. Get Articles in a Magazine.")
+        print("7. Contributors of a magazine.")
 
 
 if __name__ == "__main__":

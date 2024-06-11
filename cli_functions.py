@@ -1,5 +1,6 @@
 from models.article import Article
 from models.author import Author
+from models.magazine import Magazine
 
 def exit_program():
     print("Exiting the Program.")
@@ -45,13 +46,37 @@ def get_articles_by_author_id():
     else:
         print(f"No articles found for Author ID {author_id}.")
 
-def authors_aticles():
-    pass
+def get_magazines_by_author_id():
+    author_id = input("Enter the Author ID: ")
+    author = Author(author_id, "")  
+    magazines = author.magazines()
+    if magazines:
+        print(f"Magazines associated with Author ID {author_id}:")
+        for magazine in magazines:
+            print(magazine)
+    else:
+        print(f"No magazines found for Author ID {author_id}.")
 
-def magazines_articles():
-    pass
+def get_articles_by_magazine_id():
+    magazine_id = input("Enter the Magazine ID: ")
+    magazine = Magazine(magazine_id, "", "") 
+    articles = magazine.articles()
+    if articles:
+        print(f"Articles associated with Magazine ID {magazine_id}:")
+        for article in articles:
+            print(article)
+    else:
+        print(f"No articles found for Magazine ID {magazine_id}.")
 
-def magazines_contributors():
-    pass
+def get_contributors_by_magazine_id():
+    magazine_id = input("Enter the Magazine ID: ")
+    magazine = Magazine(magazine_id, "", "") 
+    contributors = magazine.contributors()
+    if contributors:
+        print(f"Authors associated with Magazine ID {magazine_id}:")
+        for contributor in contributors:
+            print(contributor)
+    else:
+        print(f"No authors found for Magazine ID {magazine_id}.")
 
 

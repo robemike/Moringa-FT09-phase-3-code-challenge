@@ -1,5 +1,6 @@
 from database.connection import get_db_connection 
 from .article import Article
+from .magazine import Magazine
 
 conn = get_db_connection()
 cursor = conn.cursor()
@@ -19,7 +20,7 @@ class Author:
     @id.setter
     def id(self, id_value):
         if not isinstance(id_value, int):
-            raise ValueError(
+            ValueError(
                 "ID must be of type integer."
             )
         self._id = id_value
@@ -51,3 +52,19 @@ class Author:
         for row in rows:
             articles.append(Article.instance_from_db(row))
         return articles
+    
+    def magazines(self):
+        sql = """
+            SELECT magazines.id, magazines.name, magazines.category
+            FROM magazines
+            INNER JOIN articles 
+            ON magazines.id = articles.magazine_id
+            WHERE articles.author_id = ? 
+        """
+        cursor.execute(sql, (self.id,))
+        rows = cursor.fetchall()
+        magazines = []
+        for row in rows:
+            magazine_id, magazine_name, magazine_category = row
+            magazines.append(Magazine(magazine_id, magazine_name, magazine_category))
+        return magazines
