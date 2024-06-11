@@ -78,23 +78,23 @@ class Article:
         else:
             return None
         
-    def save(self):
-        if self.id is None:
-            sql = """
-                INSERT INTO articles (title, content, author_id, magazine_id)
-                VALUES (?,?,?,?)
-            """
-            cursor.execute(sql, (self.title, self.content, self.author_id, self.magazine_id))
-            conn.commit()
-            self.id = cursor.lastrowid
-        else:
-            sql = """
-                UPDATE articles
-                SET title =?, content =?, author_id =?, magazine_id =?
-                WHERE id =?
-            """
-            cursor.execute(sql, (self.title, self.content, self.author_id, self.magazine_id, self.id))
-            conn.commit()
+    # def save(self):
+    #     if self.id is None:
+    #         sql = """
+    #             INSERT INTO articles (title, content, author_id, magazine_id)
+    #             VALUES (?,?,?,?)
+    #         """
+    #         cursor.execute(sql, (self.title, self.content, self.author_id, self.magazine_id))
+    #         conn.commit()
+    #         self.id = cursor.lastrowid
+    #     else:
+    #         sql = """
+    #             UPDATE articles
+    #             SET title =?, content =?, author_id =?, magazine_id =?
+    #             WHERE id =?
+    #         """
+    #         cursor.execute(sql, (self.title, self.content, self.author_id, self.magazine_id, self.id))
+    #         conn.commit()
 
     @classmethod
     def get_by_id(cls, article_id):
@@ -122,6 +122,7 @@ class Article:
             article.id = row[0]
             cls.all[article.id] = article
         return article
+        
     
     @classmethod
     def get_all(cls):

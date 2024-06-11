@@ -44,7 +44,7 @@ class Magazine:
     def category(self, category_value):
         if not isinstance(category_value, str) and len(category_value) == 0:
             raise ValueError ("Category must be a non-empty sting.")
-        self._category = category_value\
+        self._category = category_value
         
     def articles(self):
         sql = """

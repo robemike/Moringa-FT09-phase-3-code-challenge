@@ -8,7 +8,8 @@ from cli_functions import (
      get_articles_by_author_id,
      get_magazines_by_author_id,
      get_articles_by_magazine_id,
-     get_contributors_by_magazine_id
+     get_contributors_by_magazine_id,
+     add_items_to_database
 )
 
 def main():
@@ -33,6 +34,9 @@ def main():
                get_articles_by_magazine_id()
           elif choice == "7":
                get_contributors_by_magazine_id()
+          elif choice == "8":
+               add_items_to_database()
+               pass
         
         
 
@@ -46,6 +50,7 @@ def menu():
         print("5. Magazines associated with an author.")
         print("6. Get Articles in a Magazine.")
         print("7. Contributors of a magazine.")
+        print("8. Add items to the Database.")
 
 
 if __name__ == "__main__":
