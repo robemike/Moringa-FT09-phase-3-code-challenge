@@ -1,3 +1,6 @@
+# This file tests the implementation of the code apart from the test file
+# It uses cli (Command line interphase.)
+
 from database.setup import create_tables
 
 from cli_functions import (
